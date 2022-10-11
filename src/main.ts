@@ -29,8 +29,8 @@ async function run(): Promise<void> {
         }
       }
     })
-    core.setOutput('rpm_name', rpm_path.split('/').pop())
-    core.setOutput('rpm_path', rpm_path)
+    core.setOutput('rpm_name', rpm_path[0].split('/').pop())
+    core.setOutput('rpm_path', rpm_path[0])
     core.setOutput('rpm_content_type', 'application/octet-stream') // Content-type for Upload
   } catch (error) {
     core.setFailed(error.message)
