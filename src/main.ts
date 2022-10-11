@@ -25,13 +25,15 @@ async function run(): Promise<void> {
     await exec('find', [`${TOPDIR}/RPMS`, '-type', 'f'], {
       listeners: {
         stdout: (data: Buffer) => {
-          rpm_path = data.toString().trim()
+          rpm_path = data.toString()
         }
       }
     })
-    let singlePath = rpm_path.split(/\r?\n/)[0]
-    core.setOutput('rpm_name', singlePath.split('/').pop())
+    console.log(rpm_path)
+    let singlePath = rpm_path.split(/\n/)[0]
+    console.log(singlePath)
     core.setOutput('rpm_path', singlePath)
+    core.setOutput('rpm_name', singlePath.split('/').pop())
     core.setOutput('rpm_content_type', 'application/octet-stream') // Content-type for Upload
   } catch (error) {
     core.setFailed(error.message)
