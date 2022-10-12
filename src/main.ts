@@ -11,13 +11,14 @@ async function run(): Promise<void> {
     /* Get inputs */
     const specFile = core.getInput('spec_file')
     const srcArchive = core.getInput('src_archive')
+    const rpmName = core.getInput('rpm_name')
 
     /* Setup rpmbuild topdir */
     await exec(`mkdir -p ${SOURCES}`)
     await exec('mv', [srcArchive, SOURCES])
 
     /* Build rpm package */
-    await exec(`rpmbuild -bb ${specFile} --define="_topdir ${TOPDIR_ABS}"`)
+    await exec(`rpmbuild -bb ${specFile} --define="_topdir ${TOPDIR_ABS}" --define="_rpmName ${rpmName}"`)
 
     /* Set outputs */
     let rpm_path = ''
